@@ -131,6 +131,7 @@ dmypy.json
 
 # vsCode
 .vscode/*
+.idea/*
 
 # SSH Key
 deploy_rsa
