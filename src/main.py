@@ -9,10 +9,10 @@ class Main:
     def __init__(self):
         """Setup environment variables and default values."""
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
+        self.HOST = "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"  # Setup your host here
+        self.TOKEN = "9vXWwTEL39"  # Setup your token here
 
-        self.TICKETS = 1  # Setup your tickets here
+        self.TICKETS = 2  # Setup your tickets here
         self.T_MAX = None  # Setup your max temperature here
         self.T_MIN = None  # Setup your min temperature here
         self.DATABASE = None  # Setup your database here
