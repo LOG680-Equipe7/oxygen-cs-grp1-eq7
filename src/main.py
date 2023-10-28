@@ -5,6 +5,7 @@ import logging
 import requests
 import json
 import time
+import os
 
 from models import Base, TemperatureLog
 
@@ -13,13 +14,21 @@ class Main:
     def __init__(self):
         """Setup environment variables and default values."""
         self._hub_connection = None
-        self.HOST = "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"  # Setup your host here
-        self.TOKEN = "9vXWwTEL39"  # Setup your token here
+        # self.HOST = "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"  # Setup your host here
+        # self.TOKEN = "9vXWwTEL39"  # Setup your token here
 
-        self.TICKETS = 2  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
+        # self.TICKETS = 2  # Setup your tickets here
+        # self.T_MAX = None  # Setup your max temperature here
+        # self.T_MIN = None  # Setup your min temperature here
         # self.DATABASE = None  # Setup your database here
+        
+        # Retrieve environment variables
+        self.HOST = os.environ.get("HOST")
+        self.TOKEN = os.environ.get("TOKEN")
+        self.TICKETS = 2
+        self.T_MAX = os.environ.get("T_MAX")
+        self.T_MIN = os.environ.get("T_MIN")
+        # self.DATABASE = os.environ.get("DATABASE")
 
         # Setup your database connection with SQLAlchemy
         DATABASE_URL = "postgresql+psycopg2://postgres:postgres@localhost:5432/postgres"
