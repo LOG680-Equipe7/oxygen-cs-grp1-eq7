@@ -10,6 +10,12 @@ ENV PIPENV_VENV_IN_PROJECT=1
 # Other environment variables
 ENV PYTHONUNBUFFERED=1
 
+ENV HOST="https://hvac-simulator-a23-y2kpq.ondigitalocean.app"
+ENV TOKEN="9vXWwTEL39"
+ENV T_MAX="100"
+ENV T_MIN="0"
+ENV DATABASE=None
+
 # Copy the current directory contents into the container at /app
 COPY . /app
 
