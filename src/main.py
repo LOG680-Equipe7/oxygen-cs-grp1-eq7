@@ -1,8 +1,12 @@
 from signalrcore.hub_connection_builder import HubConnectionBuilder
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 import logging
 import requests
 import json
 import time
+
+from models import Base, TemperatureLog
 
 
 class Main:
@@ -15,7 +19,18 @@ class Main:
         self.TICKETS = 2  # Setup your tickets here
         self.T_MAX = None  # Setup your max temperature here
         self.T_MIN = None  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here
+        # self.DATABASE = None  # Setup your database here
+
+        # Setup your database connection with SQLAlchemy
+        DATABASE_URL = "postgresql+psycopg2://postgres:postgres@localhost:5432/postgres"
+        self.engine = create_engine(DATABASE_URL, echo=True)
+
+        # Create session factory
+        Session = sessionmaker(bind=self.engine)
+        self.session = Session()
+
+        # This will create tables defined in models.py if they don't exist
+        Base.metadata.create_all(self.engine)
 
     def __del__(self):
         if self._hub_connection != None:
@@ -52,10 +67,16 @@ class Main:
         )
 
         self._hub_connection.on("ReceiveSensorData", self.on_sensor_data_received)
-        self._hub_connection.on_open(lambda: print("||| Connection opened.", flush=True))
-        self._hub_connection.on_close(lambda: print("||| Connection closed.", flush=True))
+        self._hub_connection.on_open(
+            lambda: print("||| Connection opened.", flush=True)
+        )
+        self._hub_connection.on_close(
+            lambda: print("||| Connection closed.", flush=True)
+        )
         self._hub_connection.on_error(
-            lambda data: print(f"||| An exception was thrown closed: {data.error}", flush=True)
+            lambda data: print(
+                f"||| An exception was thrown closed: {data.error}", flush=True
+            )
         )
 
     def on_sensor_data_received(self, data):
@@ -64,16 +85,26 @@ class Main:
             print(data[0]["date"] + " --> " + data[0]["data"], flush=True)
             date = data[0]["date"]
             temperature = float(data[0]["data"])
-            self.take_action(temperature)
+            action = self.take_action(temperature)
+            
+            self.send_event_to_database(date, temperature, action)
+            
         except Exception as err:
             print(err, flush=True)
 
     def take_action(self, temperature):
         """Take action to HVAC depending on current temperature."""
+        
+        action = None
+        
         if float(temperature) >= float(self.T_MAX):
-            self.send_action_to_hvac("TurnOnAc")
+            action = "TurnOnAc"
+            self.send_action_to_hvac(action)
         elif float(temperature) <= float(self.T_MIN):
-            self.send_action_to_hvac("TurnOnHeater")
+            action = "TurnOnHeater"
+            self.send_action_to_hvac(action)
+            
+        return action
 
     def send_action_to_hvac(self, action):
         """Send action query to the HVAC service."""
@@ -81,14 +112,21 @@ class Main:
         details = json.loads(r.text)
         print(details, flush=True)
 
-    def send_event_to_database(self, timestamp, event):
+    def send_event_to_database(self, timestamp, temperature, action):
         """Save sensor data into database."""
         try:
-            # To implement
-            pass
+            new_log = TemperatureLog(
+                date=timestamp, temperature=temperature, action=action
+            )
+
+            # Add the instance to the session and commit
+            self.session.add(new_log)
+            self.session.commit()
+
         except requests.exceptions.RequestException as e:
-            # To implement
-            pass
+            print(f"Error saving to database: {e}", flush=True)
+             # Rollback any changes in case of an error
+            self.session.rollback() 
 
 
 if __name__ == "__main__":
