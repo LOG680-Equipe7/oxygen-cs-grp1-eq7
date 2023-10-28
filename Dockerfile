@@ -29,7 +29,7 @@ COPY Pipfile Pipfile.lock /app/
 # Install dependencies
 RUN pipenv install --system --deploy --ignore-pipfile
 
-# Make port 8000 available to the world outside this container
+# Make port 80 available to the world outside this container
 EXPOSE 80
 
 # Run main.py when the container launches
