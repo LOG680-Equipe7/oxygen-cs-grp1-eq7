@@ -14,18 +14,18 @@ class Main:
     def __init__(self):
         """Setup environment variables and default values."""
         self._hub_connection = None
-        self.HOST = "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"  # Setup your host here
-        self.TOKEN = "9vXWwTEL39"  # Setup your token here
-        self.TICKETS = 2  # Setup your tickets here
-        self.T_MAX = 100  # Setup your max temperature here
-        self.T_MIN = 0  # Setup your min temperature here
+        # self.HOST = "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"  # Setup your host here
+        # self.TOKEN = "9vXWwTEL39"  # Setup your token here
+        # self.TICKETS = 2  # Setup your tickets here
+        # self.T_MAX = 100  # Setup your max temperature here
+        # self.T_MIN = 0  # Setup your min temperature here
 
         # Retrieve environment variables (when using Docker)
-        # self.HOST = os.environ.get("HOST")
-        # self.TOKEN = os.environ.get("TOKEN")
-        # self.TICKETS = 2
-        # self.T_MAX = os.environ.get("T_MAX")
-        # self.T_MIN = os.environ.get("T_MIN")
+        self.HOST = os.environ.get("HOST")
+        self.TOKEN = os.environ.get("TOKEN")
+        self.TICKETS = 2
+        self.T_MAX = os.environ.get("T_MAX")
+        self.T_MIN = os.environ.get("T_MIN")
 
     def __del__(self):
         if self._hub_connection != None:
