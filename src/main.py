@@ -1,8 +1,8 @@
-from signalrcore.hub_connection_builder import HubConnectionBuilder
 import logging
-import requests
 import json
 import time
+import requests
+from signalrcore.hub_connection_builder import HubConnectionBuilder
 
 
 class Main:
@@ -18,7 +18,7 @@ class Main:
         self.DATABASE = None  # Setup your database here test
 
     def __del__(self):
-        if self._hub_connection != None:
+        if self._hub_connection is not None:
             self._hub_connection.stop()
 
     def setup(self):
@@ -52,10 +52,16 @@ class Main:
         )
 
         self._hub_connection.on("ReceiveSensorData", self.on_sensor_data_received)
-        self._hub_connection.on_open(lambda: print("||| Connection opened.", flush=True))
-        self._hub_connection.on_close(lambda: print("||| Connection closed.", flush=True))
+        self._hub_connection.on_open(
+            lambda: print("||| Connection opened.", flush=True)
+        )
+        self._hub_connection.on_close(
+            lambda: print("||| Connection closed.", flush=True)
+        )
         self._hub_connection.on_error(
-            lambda data: print(f"||| An exception was thrown closed: {data.error}", flush=True)
+            lambda data: print(
+                f"||| An exception was thrown closed: {data.error}", flush=True
+            )
         )
 
     def on_sensor_data_received(self, data):
@@ -63,6 +69,7 @@ class Main:
         try:
             print(data[0]["date"] + " --> " + data[0]["data"], flush=True)
             date = data[0]["date"]
+            print(date)
             temperature = float(data[0]["data"])
             self.take_action(temperature)
         except Exception as err:
@@ -82,11 +89,13 @@ class Main:
         print(details, flush=True)
 
     def send_event_to_database(self, timestamp, event):
+        print(timestamp, event)
         """Save sensor data into database."""
         try:
             # To implement
             pass
         except requests.exceptions.RequestException as e:
+            print(e)
             # To implement
             pass
 
