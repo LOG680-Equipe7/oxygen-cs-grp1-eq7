@@ -3,19 +3,26 @@ import logging
 import requests
 import json
 import time
+import os
 
 
 class Main:
     def __init__(self):
         """Setup environment variables and default values."""
         self._hub_connection = None
-        self.HOST = "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"  # Setup your host here
-        self.TOKEN = "9vXWwTEL39"  # Setup your token here
+        # self.HOST = "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"  # Setup your host here
+        # self.TOKEN = "9vXWwTEL39"  # Setup your token here
+        # self.TICKETS = 2  # Setup your tickets here
+        # self.T_MAX = None  # Setup your max temperature here
+        # self.T_MIN = None  # Setup your min temperature here
 
-        self.TICKETS = 2  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here test
+        # Retrieve environment variables
+        self.HOST = os.environ.get("HOST")
+        self.TOKEN = os.environ.get("TOKEN")
+        self.TICKETS = 2
+        self.T_MAX = os.environ.get("T_MAX")
+        self.T_MIN = os.environ.get("T_MIN")
+        self.DATABASE = os.environ.get("DATABASE")
 
     def __del__(self):
         if self._hub_connection != None:
@@ -52,10 +59,16 @@ class Main:
         )
 
         self._hub_connection.on("ReceiveSensorData", self.on_sensor_data_received)
-        self._hub_connection.on_open(lambda: print("||| Connection opened.", flush=True))
-        self._hub_connection.on_close(lambda: print("||| Connection closed.", flush=True))
+        self._hub_connection.on_open(
+            lambda: print("||| Connection opened.", flush=True)
+        )
+        self._hub_connection.on_close(
+            lambda: print("||| Connection closed.", flush=True)
+        )
         self._hub_connection.on_error(
-            lambda data: print(f"||| An exception was thrown closed: {data.error}", flush=True)
+            lambda data: print(
+                f"||| An exception was thrown closed: {data.error}", flush=True
+            )
         )
 
     def on_sensor_data_received(self, data):
