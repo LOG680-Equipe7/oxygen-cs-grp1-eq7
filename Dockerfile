@@ -20,13 +20,13 @@ COPY . /app
 
 # Install pipenv
 RUN pip install --upgrade pip
-RUN pip install --upgrade pipenv
+RUN pip install --no-cache-dir --upgrade pipenv
 
 # Copy Pipfile and Pipfile.lock
 COPY Pipfile Pipfile.lock /app/
-RUN pip install -r requirements.txt
 
 # Install dependencies
+RUN pip install -r requirements.txt
 RUN pipenv install --system --deploy --ignore-pipfile
 
 # Make port 80 available to the world outside this container
