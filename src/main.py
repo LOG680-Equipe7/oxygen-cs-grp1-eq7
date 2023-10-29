@@ -1,9 +1,13 @@
 from signalrcore.hub_connection_builder import HubConnectionBuilder
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 import logging
 import requests
 import json
 import time
 import os
+
+from models import Base, TemperatureLog
 
 
 class Main:
@@ -13,16 +17,15 @@ class Main:
         # self.HOST = "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"  # Setup your host here
         # self.TOKEN = "9vXWwTEL39"  # Setup your token here
         # self.TICKETS = 2  # Setup your tickets here
-        # self.T_MAX = None  # Setup your max temperature here
-        # self.T_MIN = None  # Setup your min temperature here
+        # self.T_MAX = 100  # Setup your max temperature here
+        # self.T_MIN = 0  # Setup your min temperature here
 
-        # Retrieve environment variables
+        # Retrieve environment variables (when using Docker)
         self.HOST = os.environ.get("HOST")
         self.TOKEN = os.environ.get("TOKEN")
         self.TICKETS = 2
         self.T_MAX = os.environ.get("T_MAX")
         self.T_MIN = os.environ.get("T_MIN")
-        self.DATABASE = os.environ.get("DATABASE")
 
     def __del__(self):
         if self._hub_connection != None:
@@ -30,7 +33,19 @@ class Main:
 
     def setup(self):
         """Setup Oxygen CS."""
+        self.setup_database()
         self.set_sensorhub()
+
+    def setup_database(self):
+        # Setup your database connection with SQLAlchemy
+        DATABASE_URL = "postgresql+psycopg2://postgres:postgres@host.docker.internal:5432/mydb"
+        self.engine = create_engine(DATABASE_URL, echo=True)
+
+        # Create session factory
+        Session = sessionmaker(bind=self.engine)
+        self.session = Session()
+        # This will create tables defined in models.py if they don't exist
+        Base.metadata.create_all(self.engine)
 
     def start(self):
         """Start Oxygen CS."""
@@ -77,16 +92,25 @@ class Main:
             print(data[0]["date"] + " --> " + data[0]["data"], flush=True)
             date = data[0]["date"]
             temperature = float(data[0]["data"])
-            self.take_action(temperature)
+            action = self.take_action(temperature)
+
+            self.send_event_to_database(date, temperature, action)
+
         except Exception as err:
             print(err, flush=True)
 
     def take_action(self, temperature):
         """Take action to HVAC depending on current temperature."""
+        action = None
+
         if float(temperature) >= float(self.T_MAX):
-            self.send_action_to_hvac("TurnOnAc")
+            action = "TurnOnAc"
+            self.send_action_to_hvac(action)
         elif float(temperature) <= float(self.T_MIN):
-            self.send_action_to_hvac("TurnOnHeater")
+            action = "TurnOnHeater"
+            self.send_action_to_hvac(action)
+
+        return action
 
     def send_action_to_hvac(self, action):
         """Send action query to the HVAC service."""
@@ -94,15 +118,19 @@ class Main:
         details = json.loads(r.text)
         print(details, flush=True)
 
-    def send_event_to_database(self, timestamp, event):
+    def send_event_to_database(self, timestamp, temperature, action):
         """Save sensor data into database."""
         try:
-            # To implement
-            pass
-        except requests.exceptions.RequestException as e:
-            # To implement
-            pass
+            new_log = TemperatureLog(
+                date=timestamp, temperature=temperature, action=action
+            )
+            # Add the instance to the session and commit
+            self.session.add(new_log)
+            self.session.commit()
 
+        except requests.exceptions.RequestException as e:
+            print(f"Error saving to database: {e}", flush=True)
+            self.session.rollback()
 
 if __name__ == "__main__":
     main = Main()

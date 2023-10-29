@@ -14,17 +14,17 @@ ENV HOST="https://hvac-simulator-a23-y2kpq.ondigitalocean.app"
 ENV TOKEN="9vXWwTEL39"
 ENV T_MAX="100"
 ENV T_MIN="0"
-ENV DATABASE=None
 
 # Copy the current directory contents into the container at /app
 COPY . /app
 
 # Install pipenv
 RUN pip install --upgrade pip
-RUN pip install pipenv
+RUN pip install --upgrade pipenv
 
 # Copy Pipfile and Pipfile.lock
 COPY Pipfile Pipfile.lock /app/
+RUN pip install psycopg2-binary
 
 # Install dependencies
 RUN pipenv install --system --deploy --ignore-pipfile
