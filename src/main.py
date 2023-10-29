@@ -1,10 +1,10 @@
+from signalrcore.hub_connection_builder import HubConnectionBuilder
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import logging
+import requests
 import json
 import time
-import requests
-from signalrcore.hub_connection_builder import HubConnectionBuilder
 import os
 from models import Base, TemperatureLog
 

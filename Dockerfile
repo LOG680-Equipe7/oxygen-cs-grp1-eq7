@@ -24,7 +24,7 @@ RUN pip install --upgrade pipenv
 
 # Copy Pipfile and Pipfile.lock
 COPY Pipfile Pipfile.lock /app/
-RUN pip install psycopg2-binary
+RUN pip install -r requirements.txt
 
 # Install dependencies
 RUN pipenv install --system --deploy --ignore-pipfile
