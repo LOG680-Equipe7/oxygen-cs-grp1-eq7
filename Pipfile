@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 signalrcore = "*"
+pre-commit = "*"
 
 [dev-packages]
 
