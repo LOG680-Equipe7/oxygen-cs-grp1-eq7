@@ -15,7 +15,7 @@ class Main:
         self.TICKETS = 2  # Setup your tickets here
         self.T_MAX = None  # Setup your max temperature here
         self.T_MIN = None  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here
+        self.DATABASE = None  # Setup your database here test
 
     def __del__(self):
         if self._hub_connection != None:
