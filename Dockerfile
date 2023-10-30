@@ -1,4 +1,3 @@
-# Use the official Python image as the base image
 FROM python:3.8-alpine
 
 # Set the working directory to /app
@@ -15,8 +14,11 @@ ENV TOKEN="9vXWwTEL39"
 ENV T_MAX="100"
 ENV T_MIN="0"
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy only specific files at the root
+COPY docker-compose.yml /app/
+COPY Dockerfile /app/
+COPY requirements.txt /app/
+COPY src/ /app/src/
 
 # Install pipenv
 RUN pip install --upgrade pip
