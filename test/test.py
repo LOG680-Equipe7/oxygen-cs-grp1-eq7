@@ -23,10 +23,10 @@ class TemperatureLog(Base):
 # Fixtures
 @pytest.fixture
 def mock_environ(monkeypatch):
-    monkeypatch.setenv("HOST", "https://hvac-simulator-a23-y2kpq.ondigitalocean.app")
-    monkeypatch.setenv("TOKEN", "9vXWwTEL39")
-    monkeypatch.setenv("T_MAX", "100")
-    monkeypatch.setenv("T_MIN", "0")
+    monkeypatch.setenv("HOST", "TEST_HOST")
+    monkeypatch.setenv("TOKEN", "TEST_TOKEN")
+    monkeypatch.setenv("T_MAX", "TEST_T_MAX")
+    monkeypatch.setenv("T_MIN", "TEST_T_MIN")
     
 @pytest.fixture(scope="function")
 def db_session():
@@ -47,10 +47,10 @@ def valid_temperature():
 # Tests
 def test_environment_variables(mock_environ):
     # Given
-    expected_host = "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"
-    expected_token = "9vXWwTEL39"
-    expected_t_max = "100"
-    expected_t_min = "0"
+    expected_host = "TEST_HOST"
+    expected_token = "TEST_TOKEN"
+    expected_t_max = "TEST_T_MAX"
+    expected_t_min = "TEST_T_MIN"
 
     # When
     main_obj = Main()
@@ -63,11 +63,13 @@ def test_environment_variables(mock_environ):
     
 
 class TestTempoeratureLog:
-    def test_valid_table(self, db_session):
+    def test_send_event_to_database(self, db_session):
         # Add a new temperature log entry to the session
-        temperature_log_entry = TemperatureLog(temperature=200, action="Heat")
+        temperature = 200
+        action = "Heat"
+        temperature_log_entry = TemperatureLog(temperature=temperature, action=action)
         db_session.add(temperature_log_entry)
         
-        log = db_session.query(TemperatureLog).filter_by(temperature=200).first()
+        log = db_session.query(TemperatureLog).filter_by(temperature=temperature).first()
         assert log.temperature == 200
         assert log.action == "Heat"
