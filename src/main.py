@@ -6,7 +6,7 @@ import requests
 import json
 import time
 import os
-from models import Base, TemperatureLog
+from src.models import Base, TemperatureLog
 
 
 class Main:
