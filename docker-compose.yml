@@ -31,8 +31,13 @@ services:
   app:
     image: oxygen-cs:1.0
     build:
-      context: .
+      context: . 
       dockerfile: Dockerfile
+    environment:
+      HOST: ${HOST}
+      TOKEN: ${TOKEN}
+      T_MAX: ${T_MAX}
+      T_MIN: ${T_MIN}
     ports:
       - 8000:8000
     depends_on:
