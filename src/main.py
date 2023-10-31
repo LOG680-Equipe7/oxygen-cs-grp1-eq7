@@ -137,7 +137,7 @@ class Main:
 
     def send_event_to_database(self, timestamp, temperature, action):
         """
-        Saves sensor data into the database.
+        Saves sensor data into the database
         """
         try:
             new_log = TemperatureLog(
