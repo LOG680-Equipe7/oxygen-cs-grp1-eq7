@@ -3,7 +3,9 @@ import pytest
 import datetime
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, DateTime, Float
 from sqlalchemy.orm import declarative_base, sessionmaker
+
 from src.main import Main
+
 
 # Database configuration
 DATABASE_URL = "postgresql+psycopg2://postgres:postgres@host.docker.internal:5432/mydb"
