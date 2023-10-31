@@ -1,4 +1,3 @@
-# Use the official Python image as the base image
 FROM python:3.8-alpine
 
 # Set the working directory to /app
@@ -10,23 +9,21 @@ ENV PIPENV_VENV_IN_PROJECT=1
 # Other environment variables
 ENV PYTHONUNBUFFERED=1
 
-ENV HOST="https://hvac-simulator-a23-y2kpq.ondigitalocean.app"
-ENV TOKEN="9vXWwTEL39"
-ENV T_MAX="100"
-ENV T_MIN="0"
-
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy only specific files at the root
+COPY docker-compose.yml /app/
+COPY Dockerfile /app/
+COPY requirements.txt /app/
+COPY src/ /app/src/
 
 # Install pipenv
 RUN pip install --upgrade pip
-RUN pip install --upgrade pipenv
+RUN pip install --no-cache-dir --upgrade pipenv
 
 # Copy Pipfile and Pipfile.lock
 COPY Pipfile Pipfile.lock /app/
-RUN pip install -r requirements.txt
 
 # Install dependencies
+RUN pip install -r requirements.txt
 RUN pipenv install --system --deploy --ignore-pipfile
 
 # Make port 80 available to the world outside this container

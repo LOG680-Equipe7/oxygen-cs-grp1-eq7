@@ -27,11 +27,9 @@ class Main:
         self.TOKEN = os.environ.get("TOKEN")
         self.engine = None
         self.session = None
-        self.config = {
-            "TICKETS": 2,
-            "T_MAX": os.environ.get("T_MAX"),
-            "T_MIN": os.environ.get("T_MIN"),
-        }
+        self.TICKETS = 2
+        self.T_MAX = os.environ.get("T_MAX")
+        self.T_MIN = os.environ.get("T_MIN")
 
     def __del__(self):
         if self._hub_connection is not None:
@@ -117,10 +115,10 @@ class Main:
         Takes action based on the current temperature.
         """
         action = None
-        if float(temperature) >= float(self.config["T_MAX"]):
+        if float(temperature) >= float(self.T_MAX):
             action = "TurnOnAc"
             self.send_action_to_hvac(action)
-        elif float(temperature) <= float(self.config["T_MIN"]):
+        elif float(temperature) <= float(self.T_MIN):
             action = "TurnOnHeater"
             self.send_action_to_hvac(action)
         return action
@@ -129,9 +127,7 @@ class Main:
         """
         Sends an action query to the HVAC service.
         """
-        r = requests.get(
-            f"{self.HOST}/api/hvac/{self.TOKEN}/{action}/{self.config['TICKETS']}"
-        )
+        r = requests.get(f"{self.HOST}/api/hvac/{self.TOKEN}/{action}/{self.TICKETS}")
         details = json.loads(r.text)
         print(details, flush=True)
 

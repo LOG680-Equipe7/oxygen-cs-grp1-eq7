@@ -3,7 +3,9 @@ Module contenant le modele pour les tables de la base de donnees.
 """
 import datetime
 from sqlalchemy import Column, Integer, String, Sequence, DateTime, Float
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
+
+# from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 

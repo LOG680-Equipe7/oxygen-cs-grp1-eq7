@@ -11,10 +11,10 @@ repos:
     -   id: black
         args: ['src/**/*.py']
 
-# -   repo: local
-#     hooks:
-#     -   id: run-unit-tests
-#         name: Run unit tests
-#         entry: pipenv run test
-#         language: system
-#         pass_filenames: false
+-   repo: local
+    hooks:
+    -   id: run-unit-tests
+        name: Run unit tests
+        entry: .venv/Scripts/pytest.exe
+        language: system
+        pass_filenames: false
