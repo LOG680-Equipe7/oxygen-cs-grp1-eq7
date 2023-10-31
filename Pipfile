@@ -11,6 +11,7 @@ sqlalchemy = "*"
 psycopg2-binary = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.8"

@@ -13,13 +13,8 @@ class Main:
     def __init__(self):
         """Setup environment variables and default values."""
         self._hub_connection = None
-        # self.HOST = "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"  # Setup your host here
-        # self.TOKEN = "9vXWwTEL39"  # Setup your token here
-        # self.TICKETS = 2  # Setup your tickets here
-        # self.T_MAX = 100  # Setup your max temperature here
-        # self.T_MIN = 0  # Setup your min temperature here
 
-        # Retrieve environment variables (when using Docker)
+        # Retrieve environment variables
         self.HOST = os.environ.get("HOST")
         self.TOKEN = os.environ.get("TOKEN")
         self.TICKETS = 2
@@ -36,7 +31,7 @@ class Main:
         self.set_sensorhub()
 
     def setup_database(self):
-        # Setup your database connection with SQLAlchemy
+        # Setup database connection with SQLAlchemy
         DATABASE_URL = (
             "postgresql+psycopg2://postgres:postgres@host.docker.internal:5432/mydb"
         )
