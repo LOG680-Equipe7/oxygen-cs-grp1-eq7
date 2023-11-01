@@ -145,6 +145,7 @@ class Main:
         except requests.exceptions.RequestException as e:
             print(f"Error saving to database: {e}", flush=True)
             self.session.rollback()
+            # test
 
 
 if __name__ == "__main__":
