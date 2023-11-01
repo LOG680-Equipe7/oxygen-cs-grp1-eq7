@@ -30,7 +30,6 @@ class Main:
         self.TICKETS = 2
         self.T_MAX = os.environ.get("T_MAX")
         self.T_MIN = os.environ.get("T_MIN")
-        # Un commentaire test
 
     def __del__(self):
         if self._hub_connection is not None:
