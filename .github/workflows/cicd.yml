@@ -27,7 +27,8 @@ jobs:
 
     - name: Code static analysis and formatting
       run: |
-        pip install pylint black
+        pip install black
+        pip install "pylint==v3.0.2"
         find src -name '*.py' | xargs pylint --rcfile=pylintrc
         black src
         
