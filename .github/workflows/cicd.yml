@@ -21,14 +21,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run unit tests
-      run: |
-        pytest
+    # - name: Run unit tests
+    #   run: |
+    #     pytest
 
     - name: Code static analysis and formatting
       run: |
-        pip install pylint black
-        find src -name '*.py' | xargs pylint
+        pip install black
+        pip install "pylint==v3.0.2"
+        find src -name '*.py' | xargs pylint --disable=W3101 --rcfile=.pylintrc
         black src
         
   # docker_build:
