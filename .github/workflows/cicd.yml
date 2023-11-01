@@ -31,6 +31,9 @@ jobs:
         pip install "pylint==v3.0.2"
         find src -name '*.py' | xargs pylint --rcfile=.pylintrc
         black src
+    - name: Prevent push on failure
+      if: failure()
+      run: exit 1
         
   # docker_build:
   #   needs: build
