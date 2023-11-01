@@ -28,7 +28,7 @@ jobs:
     - name: Code static analysis and formatting
       run: |
         pip install pylint black
-        find src -name '*.py' | xargs pylint
+        find src -name '*.py' | xargs pylint --rcfile=.pylintrc
         black src
         
   # docker_build:
