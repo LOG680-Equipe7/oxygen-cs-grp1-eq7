@@ -20,26 +20,27 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-      
-    - name: Set up virtual environment
-      run: python -m venv venv
-
-    - name: Activate virtual environment
-      run: source venv/bin/activate
-
-    - name: Install pytest in virtual environment
-      run: |
-        source venv/bin/activate
         pip install pytest
+      
+    # - name: Set up virtual environment
+    #   run: python -m venv venv
 
-    - name: Run unit tests
-      run: |
-        source venv/bin/activate
-        pytest
+    # - name: Activate virtual environment
+    #   run: source venv/bin/activate
+
+    # - name: Install pytest in virtual environment
+    #   run: |
+    #     source venv/bin/activate
+    #     pip install pytest
 
     # - name: Run unit tests
     #   run: |
+    #     source venv/bin/activate
     #     pytest
+
+    - name: Run unit tests
+      run: |
+        pytest
 
     - name: Code static analysis and formatting
       run: |
