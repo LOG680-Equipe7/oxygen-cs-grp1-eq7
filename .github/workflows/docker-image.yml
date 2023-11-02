@@ -41,7 +41,7 @@ jobs:
     - name: Build Docker-compose
       run: docker-compose -f "docker-compose.yml" up -d --build
 
-    - name: Push the app service Docker image to Docker Hub
+    - name: Push the app image to Docker Hub
       run: docker-compose -f "docker-compose.yml" push app
 
     - name: Start all services
