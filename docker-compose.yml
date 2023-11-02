@@ -30,7 +30,7 @@ services:
 
   app:
     container_name: oxygen-cs
-    image: ${DOCKERHUB_USERNAME}/oxygen-cs:1.0
+    image: ${DOCKERHUB_USERNAME}/oxygen-cs:latest
     environment:
       HOST: ${HOST}
       TOKEN: ${TOKEN}
