@@ -55,7 +55,7 @@ jobs:
     steps:
     - name: Build Docker image
       run: |
-        docker build -t oxygen-cs:1.0 .
+        docker build -t oxygen-cs:1.0 -f ./Dockerfile .
         
   docker_deploy:
     needs: docker_build
