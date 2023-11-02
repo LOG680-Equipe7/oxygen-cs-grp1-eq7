@@ -39,5 +39,4 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push Docker compose
-      uses: actions/checkout@v3
       run: docker-compose -f "docker-compose.yml" up -d --build
