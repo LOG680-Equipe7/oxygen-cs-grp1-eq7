@@ -30,7 +30,7 @@ services:
 
 
   app:
-    image: oxygen-cs:1.0
+    image: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
     build:
       context: . 
       dockerfile: Dockerfile
