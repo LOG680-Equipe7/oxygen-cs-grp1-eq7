@@ -2,8 +2,9 @@ name: CI-CD Pipeline
 
 on:
   push:
-    branches:
-      - feature/14/workflows
+  pull_request:
+    types:
+      - closed
 
 jobs:
   Build:
