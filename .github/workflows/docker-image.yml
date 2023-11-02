@@ -42,4 +42,4 @@ jobs:
       run: docker-compose -f "docker-compose.yml" up -d --build
 
     - name: Push images to Docker Hub
-      run: docker-compose -f "docker-compose.yml" push    
+      run: docker-compose -f "docker-compose.yml" push
