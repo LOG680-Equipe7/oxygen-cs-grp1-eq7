@@ -53,7 +53,7 @@ jobs:
       run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest .
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest
-      working-directory: servicePostgres/Dockerfile
+      working-directory: ./servicePostgres
 
     - name: Push Docker image to Docker Hub
       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest
