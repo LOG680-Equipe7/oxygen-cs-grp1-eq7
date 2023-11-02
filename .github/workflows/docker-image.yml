@@ -45,5 +45,11 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    - name: Build Docker-compose
+      run: docker-compose -f "docker-compose.yml" up -d --build
+
     - name: Push the app image to Docker Hub
       run: docker-compose -f "docker-compose.yml" push app
+
+    - name: Start all services
+      run: docker-compose -f "docker-compose.yml" up -d
