@@ -25,6 +25,10 @@ jobs:
         push: false
         load: true
         tags: oxygen-cs:1.0
+        
+    - name: tests
+      run: |
+        docker run oxygen-cs:1.0 pytest
 
   #   - name: Set up Python
   #     uses: actions/setup-python@v2
