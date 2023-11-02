@@ -10,8 +10,6 @@ ENV PIPENV_VENV_IN_PROJECT=1
 ENV PYTHONUNBUFFERED=1
 
 # Copy only specific files at the root
-COPY docker-compose.yml /app/
-COPY Dockerfile /app/
 COPY requirements.txt /app/
 COPY src/ /app/src/
 
