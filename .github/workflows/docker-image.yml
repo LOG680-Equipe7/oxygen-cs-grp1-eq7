@@ -1,15 +1,20 @@
-name: Docker Image CI
+name: Build Docker Image
 
 on:
   push:
+      branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Build the Docker image
-      run: docker build -t oxygen-cs:1.0 .
+    - name: Check out code
+      uses: actions/checkout@v2
 
-    - name: Publish on Dockerhub
-      run: docker push oxygen-cs:1.0
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v3   
+      with:
+        push: false
+        tags: oxygen-cs:1.0
