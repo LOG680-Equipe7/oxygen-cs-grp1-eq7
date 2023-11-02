@@ -14,7 +14,7 @@ from src.models import TemperatureLog
 
 
 # Database configuration
-DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/mydb"
+DATABASE_URL = "postgresql://postgres:postgres@host.docker.internal:5432/mydb"
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
