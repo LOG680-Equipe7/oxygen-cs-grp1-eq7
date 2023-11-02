@@ -48,19 +48,18 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and tag Docker image
+        run:|
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest .
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest
+        working-directory:./servicePostgres/Dockerfile
+
+    - name: Push Docker image to Docker Hub
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest
         
-    - name: Build Docker-compose
-      uses: isbang/compose-action@v1.5.1
+    - name: Build and push app
+      uses: docker/build-push-action@v3   
       with:
-        compose-file: "./docker-compose.yml"
-        down-flags: "--volumes"
-        services: |
-          postgres
-          app
-          pgadmin
-        
-    # - name: Build and push Docker image
-    #   uses: docker/build-push-action@v3   
-    #   with:
-    #     push: true
-    #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
