@@ -49,7 +49,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build and tag Docker image
+    - name: Build Docker image
         run:|
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest .
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest ${{ secrets.DOCKERHUB_USERNAME }}/postgres-db:latest
