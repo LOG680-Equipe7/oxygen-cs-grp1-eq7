@@ -31,6 +31,7 @@ services:
   app:
     container_name: oxygen-cs
     image: ${DOCKERHUB_USERNAME}/oxygen-cs:latest
+    restart: always
     environment:
       HOST: ${HOST}
       TOKEN: ${TOKEN}
