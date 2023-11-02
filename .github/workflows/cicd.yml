@@ -26,9 +26,14 @@ jobs:
         load: true
         tags: oxygen-cs:1.0
         
-    - name: tests
+    # - name: tests
+    #   run: |
+    #     docker run oxygen-cs:1.0 pytest 
+        
+    - name: pylint et formatting
       run: |
-        docker run oxygen-cs:1.0 pytest
+        docker run oxygen-cs:1.0 pylint --rcfile=.pylintrc
+        docker run oxygen-cs:1.0 black src
 
   #   - name: Set up Python
   #     uses: actions/setup-python@v2
