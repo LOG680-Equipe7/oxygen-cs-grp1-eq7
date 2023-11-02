@@ -49,8 +49,18 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v3   
+    - name: Set up Docker Compose
+      uses: docker/compose-action@v1
       with:
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
+        compose-version: '1.29.2'
+
+    - name: Build and push containers
+      run: |
+        docker-compose -f docker-compose.yml build
+        docker-compose -f docker-compose.yml push
+        
+    # - name: Build and push Docker image
+    #   uses: docker/build-push-action@v3   
+    #   with:
+    #     push: true
+    #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
