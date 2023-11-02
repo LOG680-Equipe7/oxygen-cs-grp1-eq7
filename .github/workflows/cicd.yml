@@ -21,22 +21,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest
-      
-    # - name: Set up virtual environment
-    #   run: python -m venv venv
-
-    # - name: Activate virtual environment
-    #   run: source venv/bin/activate
-
-    # - name: Install pytest in virtual environment
-    #   run: |
-    #     source venv/bin/activate
-    #     pip install pytest
-
-    # - name: Run unit tests
-    #   run: |
-    #     source venv/bin/activate
-    #     pytest
 
     - name: Run unit tests
       run: |
@@ -48,6 +32,7 @@ jobs:
         pip install "pylint==v3.0.2"
         find src -name '*.py' | xargs pylint --rcfile=.pylintrc
         black src
+        
     - name: Prevent push on failure
       if: failure()
       run: exit 1
