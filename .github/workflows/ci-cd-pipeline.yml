@@ -1,4 +1,4 @@
-name: Build Docker Image
+name: CI-CD Pipeline
 
 on:
   push:
@@ -45,11 +45,8 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build Docker-compose
-      run: docker-compose -f "docker-compose.yml" up -d --build
-
-    - name: Push the app image to Docker Hub
-      run: docker-compose -f "docker-compose.yml" push app
-
-    - name: Start all services
-      run: docker-compose -f "docker-compose.yml" up -d
+    - name: Build and push app
+      uses: docker/build-push-action@v3   
+      with:
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
