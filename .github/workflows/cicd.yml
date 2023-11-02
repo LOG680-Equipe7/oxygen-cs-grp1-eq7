@@ -19,8 +19,8 @@ jobs:
 
     steps:
 
-    # - name: Test Secrets
-    #   run: echo $POSTGRES_USER
+    - name: Test Secrets
+      run: echo "hello , $POSTGRES_USER"
     
     - name: Checkout code
       uses: actions/checkout@v2
