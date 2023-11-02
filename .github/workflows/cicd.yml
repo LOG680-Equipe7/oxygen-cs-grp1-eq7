@@ -32,6 +32,8 @@ jobs:
         
     - name: pylint et formatting
       run: |
+        docker run oxygen-cs:1.0 pip install pylint
+        docker run oxygen-cs:1.0 pip install black
         docker run oxygen-cs:1.0 pylint --rcfile=.pylintrc
         docker run oxygen-cs:1.0 black src
 
