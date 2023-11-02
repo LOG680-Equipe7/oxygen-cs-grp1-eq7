@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:latest
+    image: ${DOCKERHUB_USERNAME}/oxygen-cs:latest
     restart: always
     environment:
       TZ: ${TZ}
@@ -16,7 +16,7 @@ services:
 
 
   pgadmin:
-    image: dpage/pgadmin4:latest
+    image: ${DOCKERHUB_USERNAME}/oxygen-cs:latest
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL : admin@admin.com
@@ -30,7 +30,7 @@ services:
 
 
   app:
-    image: oxygen-cs:1.0
+    image: ${DOCKERHUB_USERNAME}/oxygen-cs:1.0
     build:
       context: . 
       dockerfile: Dockerfile
