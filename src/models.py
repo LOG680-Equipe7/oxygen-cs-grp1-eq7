@@ -23,7 +23,8 @@ class TemperatureLog(Base):
         """
         Initialisation de la classe TemperatureLog.
         """
-        self.date = date
+        if date:
+            self.date = date
         self.temperature = temperature
         self.action = action
 
