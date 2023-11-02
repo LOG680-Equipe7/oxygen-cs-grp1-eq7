@@ -27,8 +27,14 @@ jobs:
     - name: Activate virtual environment
       run: source venv/bin/activate
 
+    - name: Install pytest in virtual environment
+      run: |
+        source venv/bin/activate
+        pip install pytest
+
     - name: Run unit tests
       run: |
+        source venv/bin/activate
         pytest
 
     # - name: Run unit tests
