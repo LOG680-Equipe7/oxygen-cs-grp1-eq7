@@ -7,15 +7,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-        ports:
-          - 5432:5432
+    # services:
+    #   postgres:
+    #     image: postgres:latest
+    #     env:
+    #       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+    #       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+    #       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+    #     ports:
+    #       - 5432:5432
 
     steps:
     
@@ -55,7 +55,7 @@ jobs:
     steps:
     - name: Build Docker image
       run: |
-        docker build -t oxygen-cs:1.0 -f ./Dockerfile .
+        docker build -t oxygen-cs:1.0 .
         
   docker_deploy:
     needs: docker_build
