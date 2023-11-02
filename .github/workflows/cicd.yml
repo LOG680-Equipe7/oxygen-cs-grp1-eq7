@@ -23,9 +23,9 @@ jobs:
         pip install -r requirements.txt
         pip install pytest
 
-    # - name: Run unit tests
-    #   run: |
-    #     pytest
+    - name: Run unit tests
+      run: |
+        pytest
 
     - name: Code static analysis and formatting
       run: |
