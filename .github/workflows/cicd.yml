@@ -29,7 +29,7 @@ jobs:
 
     - name: Run unit tests
       run: |
-        venv/Scripts/pytest.exe
+        .venv/Scripts/pytest.exe
 
     # - name: Run unit tests
     #   run: |
