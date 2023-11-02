@@ -31,9 +31,6 @@ services:
   app:
     container_name: oxygen-cs
     image: ${DOCKERHUB_USERNAME}/oxygen-cs:1.0
-    # build:
-    #   context: . 
-    #   dockerfile: Dockerfile
     environment:
       HOST: ${HOST}
       TOKEN: ${TOKEN}
