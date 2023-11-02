@@ -58,7 +58,7 @@ jobs:
     steps:
     - name: Build Docker image
       run: |
-        docker build -t oxygen-cs:latest -t oxygen-cs:1.0 .
+        docker build -t oxygen-cs:1.0 .
         
   docker_deploy:
     needs: docker_build
@@ -67,5 +67,4 @@ jobs:
     steps:
     - name: Deploy to DockerHub
       run: |
-        docker push oxygen-cs:latest
-  #       docker push oxygen-cs:1.0
+        docker push oxygen-cs:1.0
