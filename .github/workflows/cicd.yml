@@ -50,10 +50,14 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
     - name: Build Docker-compose
-      uses: docker/compose-action@v1
+      uses: isbang/compose-action@v1.5.1
       with:
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
+        compose-file: "./docker-compose.yml"
+        down-flags: "--volumes"
+        services: |
+          postgres
+          app
+          pgadmin
         
     # - name: Build and push Docker image
     #   uses: docker/build-push-action@v3   
