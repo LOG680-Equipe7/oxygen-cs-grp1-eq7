@@ -50,13 +50,10 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
     - name: Build Docker-compose
-      run: docker-compose -f "docker-compose.yml" up -d --build
-
-    - name: Push the app image to Docker Hub
-      run: docker-compose -f "docker-compose.yml" push app
-
-    - name: Start all services
-      run: docker-compose -f "docker-compose.yml" up -d
+      uses: docker/compose-action@v1
+      with:
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
         
     # - name: Build and push Docker image
     #   uses: docker/build-push-action@v3   
