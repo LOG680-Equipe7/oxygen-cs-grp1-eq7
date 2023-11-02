@@ -23,4 +23,4 @@ jobs:
       uses: docker/build-push-action@v3   
       with:
         push: true
-        tags: oxygen-cs:1.0
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
