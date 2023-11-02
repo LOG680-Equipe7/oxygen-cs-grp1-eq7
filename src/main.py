@@ -48,9 +48,7 @@ class Main:
         """
         Sets up the database connection using SQLAlchemy.
         """
-        DATABASE_URL = (
-            "postgresql+psycopg2://postgres:postgres@host.docker.internal:5432/mydb"
-        )
+        DATABASE_URL = "postgresql://postgres:postgres@host.docker.internal:5432/mydb"
         self.engine = create_engine(DATABASE_URL, echo=True)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
@@ -141,8 +139,10 @@ class Main:
             new_log = TemperatureLog(
                 date=timestamp, temperature=temperature, action=action
             )
+            new_log.print_log_details()
             self.session.add(new_log)
             self.session.commit()
+            print("Saved to database.")
 
         except requests.exceptions.RequestException as e:
             print(f"Error saving to database: {e}", flush=True)
