@@ -28,9 +28,13 @@ jobs:
 
     - name: Install dependencies
       run: |
+        echo $POSTGRES_USER
+        echo $POSTGRES_PASSWORD
+        echo $POSTGRES_DB
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest
+        pip install psycopg2-binary 
 
     - name: Run unit tests
       run: |
