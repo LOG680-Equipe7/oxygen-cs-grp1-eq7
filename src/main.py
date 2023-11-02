@@ -139,10 +139,8 @@ class Main:
             new_log = TemperatureLog(
                 date=timestamp, temperature=temperature, action=action
             )
-            new_log.print_log_details()
             self.session.add(new_log)
             self.session.commit()
-            print("Saved to database.")
 
         except requests.exceptions.RequestException as e:
             print(f"Error saving to database: {e}", flush=True)
