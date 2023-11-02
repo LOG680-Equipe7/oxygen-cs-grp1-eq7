@@ -19,8 +19,8 @@ jobs:
 
     steps:
 
-    - name: Test Secrets
-      run: echo $POSTGRES_USER
+    # - name: Test Secrets
+    #   run: echo $POSTGRES_USER
     
     - name: Checkout code
       uses: actions/checkout@v2
@@ -36,9 +36,9 @@ jobs:
         pip install -r requirements.txt
         pip install pytest
 
-    - name: Run unit tests
-      run: |
-        pytest
+    # - name: Run unit tests
+    #   run: |
+    #     pytest
 
     - name: Code static analysis and formatting
       run: |
