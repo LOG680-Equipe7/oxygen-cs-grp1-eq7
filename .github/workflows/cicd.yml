@@ -53,7 +53,7 @@ jobs:
         
   docker_build:
     needs: build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/feature-14-cicd-pipeline'
     runs-on: ubuntu-latest
     steps:
     - name: Build Docker image
@@ -62,7 +62,7 @@ jobs:
         
   docker_deploy:
     needs: docker_build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/feature-14-cicd-pipeline'
     runs-on: ubuntu-latest
     steps:
     - name: Deploy to DockerHub
