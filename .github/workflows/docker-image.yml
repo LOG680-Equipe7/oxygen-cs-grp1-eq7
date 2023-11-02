@@ -40,6 +40,12 @@ jobs:
 
     - name: Build Docker-compose
       run: docker-compose -f "docker-compose.yml" up -d --build
+      with:
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
 
-    - name: Push images to Docker Hub
-      run: docker-compose -f "docker-compose.yml" push
+    # - name: Push images to Docker Hub
+    #   run: docker-compose -f "docker-compose.yml" push
+    #   with:
+    #     push: true
+    #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:1.0
