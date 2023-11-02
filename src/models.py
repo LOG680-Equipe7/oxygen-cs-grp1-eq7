@@ -5,8 +5,6 @@ import datetime
 from sqlalchemy import Column, Integer, String, Sequence, DateTime, Float
 from sqlalchemy.orm import declarative_base
 
-# from sqlalchemy.ext.declarative import declarative_base
-
 Base = declarative_base()
 
 
@@ -21,17 +19,22 @@ class TemperatureLog(Base):
     temperature = Column(Float)
     action = Column(String(50))
 
-    def __init__(self, placeholder):
+    def __init__(self, date, temperature, action):
         """
-        initialisation de la classe TemperatureLog.
+        Initialisation de la classe TemperatureLog.
         """
-        self.placeholder = placeholder
+        if date:
+            self.date = date
+        self.temperature = temperature
+        self.action = action
 
-    def print(self, string):
+    def print_log_details(self):
         """
-        Affiche un string.
+        Print the date, temperature, and action attributes of the instance.
         """
-        print(string)
+        print(
+            f"Date: {self.date}, Temperature: {self.temperature}, Action: {self.action}"
+        )
 
     def pleaseLint(self, string):
         """
