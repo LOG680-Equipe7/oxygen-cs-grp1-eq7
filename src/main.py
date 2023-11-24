@@ -49,7 +49,7 @@ class Main:
         """
         Sets up the database connection using SQLAlchemy.
         """
-        DATABASE_URL = "postgresql://postgres:postgres@host.docker.internal:5432/mydb"
+        DATABASE_URL = "postgresql://postgres:postgres@postgres:5432/mydb"
         self.engine = create_engine(DATABASE_URL, echo=True)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
