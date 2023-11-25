@@ -51,7 +51,8 @@ class Main:
         password = os.environ.get("POSTGRES_PASSWORD")
         database = os.environ.get("POSTGRES_DB")
 
-        DATABASE_URL = f"postgresql://{username}:{password}@postgres:5432/{database}"
+        # DATABASE_URL = f"postgresql://{username}:{password}@postgres:5432/{database}"
+        DATABASE_URL = "postgresql://postgres:postgres@postgres:5432/mydb"
         self.engine = create_engine(DATABASE_URL, echo=True)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
