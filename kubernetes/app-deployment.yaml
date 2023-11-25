@@ -20,6 +20,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: oxygen-config
         env:
         - name: POSTGRES_HOST
           value: postgres
@@ -40,6 +43,11 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: POSTGRES_DB
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: OXYGEN_TOKEN
         resources:
           requests:
             memory: "200Mi"
