@@ -25,10 +25,16 @@ spec:
             name: oxygen-config
         env:
         - name: POSTGRES_HOST
-          value: postgres
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_HOST
         - name: POSTGRES_PORT
-          value: "5432"
-        - name: POSTGRES_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PORT
+        - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
               name: postgres-secret
@@ -38,7 +44,7 @@ spec:
             secretKeyRef:
               name: postgres-secret
               key: POSTGRES_PASSWORD
-        - name: POSTGRES_DATABASE
+        - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
               name: postgres-secret
