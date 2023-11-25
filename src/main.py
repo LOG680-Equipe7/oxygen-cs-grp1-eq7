@@ -23,16 +23,13 @@ class Main:
         Initializes the Main class with required environment variables and default values.
         """
         self._hub_connection = None
-        self.HOST = os.environ.get(
-            "HOST", "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"
-        )
-        self.TOKEN = os.environ.get("TOKEN", "9vXWwTEL39")
+        self.HOST = os.environ.get("HOST")
+        self.TOKEN = os.environ.get("TOKEN")
         self.engine = None
         self.session = None
         self.TICKETS = 2
-        self.T_MAX = os.environ.get("T_MAX", 50)
-        self.T_MIN = os.environ.get("T_MIN", 0)
-        # Commentaire
+        self.T_MAX = os.environ.get("T_MAX")
+        self.T_MIN = os.environ.get("T_MIN")
 
     def __del__(self):
         if self._hub_connection is not None:
