@@ -58,17 +58,3 @@ jobs:
       with:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/oxygen-cs:latest
-
-  Kubernetes:
-    needs: Deploy
-    if: github.ref == 'refs/heads/feature/21B/kubernetes-deployment'
-    runs-on: ubuntu-latest
-    steps:
-    - name: Restart Kubernetes pod
-      uses: Azure/k8s-set-context@v1
-      with:
-        method: kubeconfig
-        kubeconfig: ${{ secrets.KUBECONFIG_DATA }}
-    - name: Restart Kubernetes Deployment
-      run: |
-        kubectl rollout restart deployment oxygen -n team7-namespace
