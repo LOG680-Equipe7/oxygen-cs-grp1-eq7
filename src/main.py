@@ -32,6 +32,8 @@ class Main:
         self.T_MAX = os.environ.get("T_MAX")
         self.T_MIN = os.environ.get("T_MIN")
 
+        self.host = os.environ.get("POSTGRES_HOST")
+        self.port = os.environ.get("POSTGRES_PORT")
         self.username = os.environ.get("POSTGRES_USER")
         self.password = os.environ.get("POSTGRES_PASSWORD")
         self.database = os.environ.get("POSTGRES_DB")
@@ -52,7 +54,7 @@ class Main:
         Sets up the database connection using SQLAlchemy.
         """
 
-        DATABASE_URL = f"postgresql://{self.username}:{self.password}@postgres:5432/{self.database}"
+        DATABASE_URL = f"postgresql://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}"
         self.engine = create_engine(DATABASE_URL, echo=True)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
