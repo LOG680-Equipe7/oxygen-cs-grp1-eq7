@@ -31,6 +31,10 @@ class Main:
         self.T_MAX = os.environ.get("T_MAX")
         self.T_MIN = os.environ.get("T_MIN")
 
+        self.username = os.environ.get("POSTGRES_USER")
+        self.password = os.environ.get("POSTGRES_PASSWORD")
+        self.database = os.environ.get("POSTGRES_DB")
+
     def __del__(self):
         if self._hub_connection is not None:
             self._hub_connection.stop()
@@ -47,11 +51,7 @@ class Main:
         Sets up the database connection using SQLAlchemy.
         """
 
-        username = os.environ.get("POSTGRES_USER")
-        password = os.environ.get("POSTGRES_PASSWORD")
-        database = os.environ.get("POSTGRES_DB")
-
-        # DATABASE_URL = f"postgresql://{username}:{password}@postgres:5432/{database}"
+        DATABASE_URL = f"postgresql://{self.username}:{self.password}@postgres:5432/{self.database}"
         DATABASE_URL = "postgresql://postgres:postgres@postgres:5432/mydb"
         self.engine = create_engine(DATABASE_URL, echo=True)
         Session = sessionmaker(bind=self.engine)
