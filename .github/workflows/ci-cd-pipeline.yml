@@ -3,10 +3,10 @@ name: CI-CD Pipeline
 on:
   push:
     branches:
-      - feature/21B/kubernetes-deployment  # Run this workflow when there is a push to the dev branch
+      - '*'
   pull_request:
-    branches:
-      - feature/21B/kubernetes-deployment  # Run this workflow for pull requests targeting the dev branch
+    types:
+      - closed
 
 jobs:
   Build:
