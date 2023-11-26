@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oxygen-config
+data:
+  HOST: "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"
+  T_MAX: "50"
+  T_MIN: "0"

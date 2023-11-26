@@ -23,16 +23,20 @@ class Main:
         Initializes the Main class with required environment variables and default values.
         """
         self._hub_connection = None
-        self.HOST = os.environ.get(
-            "HOST", "https://hvac-simulator-a23-y2kpq.ondigitalocean.app"
-        )
-        self.TOKEN = os.environ.get("TOKEN", "9vXWwTEL39")
         self.engine = None
         self.session = None
+
+        self.HOST = os.environ.get("HOST")
+        self.TOKEN = os.environ.get("TOKEN")
         self.TICKETS = 2
-        self.T_MAX = os.environ.get("T_MAX", 50)
-        self.T_MIN = os.environ.get("T_MIN", 0)
-        # Commentaire
+        self.T_MAX = os.environ.get("T_MAX")
+        self.T_MIN = os.environ.get("T_MIN")
+
+        self.host = os.environ.get("POSTGRES_HOST")
+        self.port = os.environ.get("POSTGRES_PORT")
+        self.username = os.environ.get("POSTGRES_USER")
+        self.password = os.environ.get("POSTGRES_PASSWORD")
+        self.database = os.environ.get("POSTGRES_DB")
 
     def __del__(self):
         if self._hub_connection is not None:
@@ -49,7 +53,8 @@ class Main:
         """
         Sets up the database connection using SQLAlchemy.
         """
-        DATABASE_URL = "postgresql://postgres:postgres@postgres:5432/mydb"
+
+        DATABASE_URL = f"postgresql://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}"
         self.engine = create_engine(DATABASE_URL, echo=True)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
